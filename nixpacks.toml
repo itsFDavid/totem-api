@@ -1,0 +1,4 @@
+[start]
+# Comando para iniciar la aplicación en producción.
+# Recomendado: Usar Gunicorn para gestionar los workers de Uvicorn.
+cmd = "gunicorn -k uvicorn.workers.UvicornWorker app.main:app -b 0.0.0.0:${PORT:-8000}"
