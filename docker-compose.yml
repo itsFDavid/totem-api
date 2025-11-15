@@ -1,14 +1,45 @@
-services:
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: totemdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+# services:
+#   db:
+#     image: postgres:15
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: totemdb
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
+
+version: "3.8"
+
+services:
+  # ---------------------------------
+  # TU API (construida desde Dockerfile)
+  # ---------------------------------
+  mi-api:
+    build: .  # <-- ¡Construye usando el Dockerfile en este directorio!
+    restart: always
+    ports:
+      - "5005:5005" # <-- Mapea el puerto (host:container)
+    env_file:
+      - .env  # <-- Carga las variables de .env
+    environment:
+      # ¡¡LA PARTE MÁS IMPORTANTE!!
+      # Tu API usará esta URL INTERNA para hablar con Minio
+      - S3_ENDPOINT_URL=http://minio:9000
+      
+      # Pasa el puerto (aunque ya está en el CMD, esto es explícito)
+      - PORT=5005 
+      # ... (otras variables que necesite tu API)
+    depends_on:
+      - minio # Espera a que Minio inicie (parcialmente)
+    networks:
+      - mi-red
+
+# Define la red personalizada
+networks:
+  totemdb:
+    driver: bridge
