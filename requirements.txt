@@ -14,5 +14,6 @@ python-multipart
 email-validator
 boto3
 google-genai
+psycopg2
 Pillow
 itsdangerous
