@@ -36,4 +36,4 @@ def read_users_me(current_user: models.User = Depends(get_current_user)):
     return current_user
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=5005, reload=True)
