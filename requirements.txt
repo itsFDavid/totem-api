@@ -15,6 +15,6 @@ python-multipart
 email-validator
 boto3
 google-genai
-psycopg2
+psycopg2-binary
 Pillow
 itsdangerous
