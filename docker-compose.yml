@@ -7,11 +7,6 @@ services:
     restart: always
     ports:
       - "5005:5005" 
-    env_file:
-      - .env
-    environment:
-      - S3_ENDPOINT_URL=minio:9000
-      - PORT=5005
     depends_on:
       - minio 
     networks:
@@ -25,8 +20,6 @@ services:
     restart: always
     volumes:
       - minio-data:/data
-    env_file:
-      - .env
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000" # Puerto S3 (para acceso PÚBLICO si lo necesitas)
